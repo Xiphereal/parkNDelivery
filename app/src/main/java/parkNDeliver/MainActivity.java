@@ -1,7 +1,8 @@
-package com.example.parkndeliver;
+package parkNDeliver;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.parkndeliver.R;
 
 public class MainActivity extends AppCompatActivity {
 
