@@ -1,6 +1,5 @@
 package parkNDeliver.main;
 
-import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +10,8 @@ import com.here.sdk.mapviewlite.MapScene;
 import com.here.sdk.mapviewlite.MapStyle;
 import com.here.sdk.mapviewlite.MapViewLite;
 
+import parkNDeliver.data.CoordinatesReader;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CoordinatesReader.setResources(getResources());
+        CoordinatesReader.parseClientsData();
 
         // Get a MapViewLite instance from the layout.
         mapView = findViewById(R.id.map_view);
