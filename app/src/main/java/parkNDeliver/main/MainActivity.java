@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.parkndeliver.R;
 import com.here.sdk.core.GeoCoordinates;
+import com.here.sdk.gestures.GestureType;
 import com.here.sdk.mapviewlite.MapScene;
 import com.here.sdk.mapviewlite.MapStyle;
 import com.here.sdk.mapviewlite.MapViewLite;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         // Get a MapViewLite instance from the layout.
         mapView = findViewById(R.id.map_view);
         mapView.onCreate(savedInstanceState);
+        mapView.getGestures().disableDefaultAction(GestureType.DOUBLE_TAP);
+        mapView.getGestures().disableDefaultAction(GestureType.TWO_FINGER_TAP);
         loadMapScene();
     }
 
