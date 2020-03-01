@@ -6,6 +6,12 @@ public class Client {
     private float longitude;
     private int id;
 
+    public Client(int locationName, float latitude, float longitude) {
+        this.id = locationName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public float getLatitude() {
         return latitude;
     }
