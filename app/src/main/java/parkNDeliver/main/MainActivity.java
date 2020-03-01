@@ -1,20 +1,22 @@
 package parkNDeliver.main;
 
+import android.content.Context;
 import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.parkndeliver.R;
+import com.here.sdk.core.Anchor2D;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.gestures.GestureType;
-import com.here.sdk.mapviewlite.MapScene;
-import com.here.sdk.mapviewlite.MapStyle;
-import com.here.sdk.mapviewlite.MapViewLite;
+import com.here.sdk.mapviewlite.*;
+import parkNDeliver.services.mapMarker.MapMarkerFabric;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private MapViewLite mapView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         mapView.onCreate(savedInstanceState);
         mapView.getGestures().disableDefaultAction(GestureType.DOUBLE_TAP);
         mapView.getGestures().disableDefaultAction(GestureType.TWO_FINGER_TAP);
+
+        MapMarkerFabric.setApplicationContext(this.getApplicationContext());
+
+        //MAP MAKER MANAGER
+        //mapView.getMapScene().addMapMarker(place);
+
         loadMapScene();
     }
 
