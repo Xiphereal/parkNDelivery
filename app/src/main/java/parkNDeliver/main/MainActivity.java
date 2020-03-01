@@ -1,7 +1,5 @@
 package parkNDeliver.main;
 
-import android.content.Context;
-import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,16 +10,20 @@ import com.here.sdk.gestures.GestureType;
 import com.here.sdk.mapviewlite.*;
 import parkNDeliver.services.mapMarker.MapMarkerFabric;
 
+import parkNDeliver.data.CoordinatesReader;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private MapViewLite mapView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CoordinatesReader.setResources(getResources());
+        CoordinatesReader.parseClientsData();
 
         // Get a MapViewLite instance from the layout.
         mapView = findViewById(R.id.map_view);
