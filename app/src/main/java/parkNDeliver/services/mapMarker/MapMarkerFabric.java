@@ -2,6 +2,7 @@ package parkNDeliver.services.mapMarker;
 
 import android.content.Context;
 import com.here.sdk.core.GeoCoordinates;
+import com.here.sdk.mapviewlite.MapImage;
 import parkNDeliver.data.Client;
 import parkNDeliver.data.CoordinatesReader;
 import parkNDeliver.data.LoadUnload;
@@ -11,14 +12,21 @@ import java.util.List;
 public class MapMarkerFabric {
 
     private static Context context;
+    private static MapImage clientMapImage;
+    private static MapImage loadUnloadMapImage;
+
 
     public static void setApplicationContext(Context applicationContext) {
         context = applicationContext;
     }
 
+    public static void setClientMapImageResource(MapImage mapImage) {
+        clientMapImage = mapImage;
+    }
+
     public static List<ClientMapMarker> generateAllClients() {
         List<ClientMapMarker> clientsMapMarker = new LinkedList<>();
-        List<Client> clientsReceived = CoordinatesReader.getClients();
+        List<Client> clientsReceived = CoordinatesReader.getClients(20);
 
         for (Client client : clientsReceived) {
             clientsMapMarker.add(generateClient(client));
@@ -41,7 +49,7 @@ public class MapMarkerFabric {
 
     private static ClientMapMarker generateClient(Client client) {
         GeoCoordinates coordinates = getGeoCoordinates(client);
-        ClientMapMarker clientMapMarker = new ClientMapMarker(coordinates, context);
+        ClientMapMarker clientMapMarker = new ClientMapMarker(coordinates, context, clientMapImage);
         clientMapMarker.setImage();
         return clientMapMarker;
     }

@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.parkndeliver.R;
-import com.here.sdk.core.Anchor2D;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.gestures.GestureType;
 import com.here.sdk.mapviewlite.*;
@@ -35,14 +34,21 @@ public class MainActivity extends AppCompatActivity {
         mapView.getGestures().disableDefaultAction(GestureType.TWO_FINGER_TAP);
 
         MapMarkerFabric.setApplicationContext(this.getApplicationContext());
+        MapImage mapImage = MapImageFactory.fromResource(getApplicationContext().getResources(), R.mipmap.pin);
+        MapMarkerFabric.setClientMapImageResource(mapImage);
 
+
+        //populateWithClientsMapMarkers();
+
+        loadMapScene();
+    }
+
+    private void populateWithClientsMapMarkers() {
         //MAP MAKER MANAGER
         List<ClientMapMarker> clients = MapMarkerFabric.generateAllClients();
         for(ClientMapMarker clientMapMarker : clients) {
             mapView.getMapScene().addMapMarker(clientMapMarker.getMapMarker());
         }
-
-        loadMapScene();
     }
 
     private void loadMapScene() {
@@ -51,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLoadScene(@Nullable MapScene.ErrorCode errorCode) {
                 if (errorCode == null) {
+                    populateWithClientsMapMarkers();
                     mapView.getCamera().setTarget(new GeoCoordinates(39.475720, -0.375099));
                     mapView.getCamera().setZoomLevel(14);
                 } else {

@@ -17,15 +17,15 @@ public class ClientMapMarker {
 
     private MapMarker mapMarker;
     private  Context context;
-   // private List<MapMarker> clients = new LinkedList<>();
+    MapImage mapImage;
 
-    public ClientMapMarker(@NonNull GeoCoordinates geoCoordinates, Context context) {
+    public ClientMapMarker(@NonNull GeoCoordinates geoCoordinates, Context context, MapImage mapImage) {
         mapMarker = new MapMarker(geoCoordinates);
         this.context = context;
+        this.mapImage = mapImage;
     }
 
     public void setImage() {
-        MapImage mapImage = MapImageFactory.fromResource(context.getResources(), R.mipmap.pin);
         MapMarkerImageStyle mapMarkerImageStyle = new MapMarkerImageStyle();
         mapMarkerImageStyle.setScale(0.05f);
         mapMarkerImageStyle.setAnchorPoint(new Anchor2D(0.5f, 1));
@@ -35,4 +35,5 @@ public class ClientMapMarker {
     public MapMarker getMapMarker() {
         return mapMarker;
     }
+
 }

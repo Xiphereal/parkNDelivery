@@ -124,7 +124,6 @@ public class CoordinatesReader {
     }
 
     private static void initializeLoadUnloadsList() {
-
         loadUnloads = new LinkedList<>();
     }
 
