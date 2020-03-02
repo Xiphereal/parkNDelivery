@@ -10,10 +10,14 @@ import com.here.sdk.mapviewlite.MapImageFactory;
 import com.here.sdk.mapviewlite.MapMarker;
 import com.here.sdk.mapviewlite.MapMarkerImageStyle;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class ClientMapMarker {
 
     private MapMarker mapMarker;
     private  Context context;
+   // private List<MapMarker> clients = new LinkedList<>();
 
     public ClientMapMarker(@NonNull GeoCoordinates geoCoordinates, Context context) {
         mapMarker = new MapMarker(geoCoordinates);
@@ -28,18 +32,7 @@ public class ClientMapMarker {
         mapMarker.addImage(mapImage,mapMarkerImageStyle);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public MapMarker getMapMarker() {
+        return mapMarker;
+    }
 }
