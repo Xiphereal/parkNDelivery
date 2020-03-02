@@ -9,8 +9,8 @@ import android.content.res.Resources;
 import com.example.parkndeliver.R;
 
 public class CoordinatesReader {
-    private static int numberOfClientLinesToProcess = 30;
-    private static int numberOfLoadUnloadsLinesToProcess = 30;
+    private static int numberOfClientLinesToProcess = Integer.MAX_VALUE;
+    private static int numberOfLoadUnloadsLinesToProcess = Integer.MAX_VALUE;
 
     private static Resources appResources;
 
@@ -124,7 +124,8 @@ public class CoordinatesReader {
     }
 
     private static void initializeLoadUnloadsList() {
-        loadUnloads = new ArrayList<>();
+
+        loadUnloads = new LinkedList<>();
     }
 
     private static List<LoadUnload> parseLoadUnloadData(int numberOfRequestedLoadUnloads) {
