@@ -8,9 +8,12 @@ import com.here.sdk.core.Anchor2D;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.gestures.GestureType;
 import com.here.sdk.mapviewlite.*;
+import parkNDeliver.services.mapMarker.ClientMapMarker;
 import parkNDeliver.services.mapMarker.MapMarkerFabric;
 
 import parkNDeliver.data.CoordinatesReader;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CoordinatesReader.setResources(getResources());
-        CoordinatesReader.parseClientsData();
+
 
         // Get a MapViewLite instance from the layout.
         mapView = findViewById(R.id.map_view);
@@ -34,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
         MapMarkerFabric.setApplicationContext(this.getApplicationContext());
 
         //MAP MAKER MANAGER
-        //mapView.getMapScene().addMapMarker(place);
+        List<ClientMapMarker> clients = MapMarkerFabric.generateAllClients();
+        for(ClientMapMarker clientMapMarker : clients) {
+            mapView.getMapScene().addMapMarker(clientMapMarker.getMapMarker());
+        }
 
         loadMapScene();
     }
