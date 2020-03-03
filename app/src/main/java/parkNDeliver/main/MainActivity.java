@@ -31,15 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
         initialize();
 
-        disableUnwantedGestures();
+        //disableUnwantedGestures();
 
         MapMarkerFabric.setApplicationContext(this.getApplicationContext());
 
         //* Get custom images for both clients & loadUnloadPoints and pass them to the MapMarkerFabric. *//
-        setMapMarkerImages();
+        //setMapMarkerImages();
 
-        mapMarkerManager = new MapMarkerManager();
-        mapMarkerManager.populateWithClientsMapMarkers(mapFragment);
+        //mapMarkerManager = new MapMarkerManager();
+        //mapMarkerManager.populateWithClientsMapMarkers(mapFragment);
 
     }
 
