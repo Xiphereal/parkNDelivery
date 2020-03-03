@@ -2,6 +2,7 @@ package parkNDeliver.services.mapMarker;
 
 import android.content.Context;
 import com.here.android.mpa.common.GeoCoordinate;
+import com.here.android.mpa.common.Image;
 import parkNDeliver.data.Client;
 import parkNDeliver.data.CoordinatesReader;
 import parkNDeliver.data.LoadUnload;
@@ -11,60 +12,62 @@ import java.util.List;
 public class MapMarkerFabric {
 
     private static Context context;
-//    private static MapImage clientMapImage;
-//    private static MapImage loadUnloadMapImage;
+    private static Image clientImage;
+    private static Image loadUnloadImage;
 
+    public static List<ClientMapMarker> generateAllClients() {
+        List<ClientMapMarker> clientMapMarkers = new LinkedList<>();
+        List<Client> requestedClients = CoordinatesReader.getClients(20);
 
-    public static void setApplicationContext(Context applicationContext) {
-        context = applicationContext;
+        for (Client client : requestedClients) {
+            clientMapMarkers.add(generateClient(client));
+        }
+
+        return clientMapMarkers;
     }
-
-//    public static void setClientMapImageResource(MapImage mapImage) {
-//        clientMapImage = mapImage;
-//    }
-
-//    public static List<ClientMapMarker> generateAllClients() {
-//        List<ClientMapMarker> clientsMapMarker = new LinkedList<>();
-//        List<Client> clientsReceived = CoordinatesReader.getClients(20);
-//
-//        for (Client client : clientsReceived) {
-//            clientsMapMarker.add(generateClient(client));
-//        }
-//
-//        return clientsMapMarker;
-//    }
 
     public List<LoadUnloadMapMarker> generateAllLoadUnloads() {
         List<LoadUnloadMapMarker> loadUnloadMapMarkers = new LinkedList<>();
-        List<LoadUnload> loadUnloadsReceived = CoordinatesReader.getLoadUnloads();
+        List<LoadUnload> requestedLoadUnloads = CoordinatesReader.getLoadUnloads(10);
 
-        for (LoadUnload loadUnload : loadUnloadsReceived) {
+        for (LoadUnload loadUnload : requestedLoadUnloads) {
             loadUnloadMapMarkers.add(generateLoadUnload(loadUnload));
         }
 
         return loadUnloadMapMarkers;
     }
 
+    public static void setApplicationContext(Context applicationContext) {
+        context = applicationContext;
+    }
 
-//    private static ClientMapMarker generateClient(Client client) {
-//        GeoCoordinate coordinates = getGeoCoordinates(client);
-//        ClientMapMarker clientMapMarker = new ClientMapMarker(coordinates, context, clientMapImage);
-//        clientMapMarker.setImage();
-//        return clientMapMarker;
-//    }
+    public static void setClientImageResource(Image image) {
+        clientImage = image;
+    }
+
+    public static void setLoadUnloadImageResource(Image image) {
+        loadUnloadImage = image;
+    }
+
+    private static ClientMapMarker generateClient(Client client) {
+        GeoCoordinate coordinate = getGeoCoordinate(client);
+        ClientMapMarker clientMapMarker = new ClientMapMarker(coordinate, context, clientImage);
+        clientMapMarker.setImage();
+        return clientMapMarker;
+    }
 
     private LoadUnloadMapMarker generateLoadUnload(LoadUnload loadUnload) {
-        GeoCoordinate coordinates = getGeoCoordinates(loadUnload);
-        LoadUnloadMapMarker loadUnloadMapMarker = new LoadUnloadMapMarker(coordinates, context);
+        GeoCoordinate coordinates = getGeoCoordinate(loadUnload);
+        LoadUnloadMapMarker loadUnloadMapMarker = new LoadUnloadMapMarker(coordinates, context, loadUnloadImage);
         loadUnloadMapMarker.setImage();
         return loadUnloadMapMarker;
     }
 
-    private static GeoCoordinate getGeoCoordinates(Client client) {
+    private static GeoCoordinate getGeoCoordinate(Client client) {
        return new GeoCoordinate(client.getLatitude(), client.getLongitude());
     }
 
-    private GeoCoordinate getGeoCoordinates(LoadUnload loadUnload) {
+    private GeoCoordinate getGeoCoordinate(LoadUnload loadUnload) {
         return new GeoCoordinate(loadUnload.getLatitude(), loadUnload.getLongitude());
     }
 }

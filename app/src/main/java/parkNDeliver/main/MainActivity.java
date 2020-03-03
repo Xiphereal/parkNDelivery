@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.parkndeliver.R;
 import com.here.android.mpa.common.GeoCoordinate;
+import com.here.android.mpa.common.Image;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.mapping.AndroidXMapFragment;
 import com.here.android.mpa.mapping.Map;
@@ -12,6 +13,7 @@ import parkNDeliver.services.mapMarker.ClientMapMarker;
 import parkNDeliver.services.mapMarker.MapMarkerFabric;
 
 import parkNDeliver.data.CoordinatesReader;
+import parkNDeliver.services.mapMarker.MapMarkerManager;
 
 import java.io.File;
 import java.util.List;
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Map map;
     private AndroidXMapFragment mapFragment;
-
+    private MapMarkerManager mapMarkerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
         initialize();
 
-//        mapView.onCreate(savedInstanceState);
-//        mapView.getGestures().disableDefaultAction(GestureType.DOUBLE_TAP);
-//        mapView.getGestures().disableDefaultAction(GestureType.TWO_FINGER_TAP);
+        disableUnwantedGestures();
 
-//        MapMarkerFabric.setApplicationContext(this.getApplicationContext());
-//        MapImage mapImage = MapImageFactory.fromResource(getApplicationContext().getResources(), R.mipmap.pin);
-//        MapMarkerFabric.setClientMapImageResource(mapImage);
+        MapMarkerFabric.setApplicationContext(this.getApplicationContext());
 
+        //* Get custom images for both clients & loadUnloadPoints and pass them to the MapMarkerFabric. *//
+        setMapMarkerImages();
 
-        //populateWithClientsMapMarkers();
+        mapMarkerManager = new MapMarkerManager();
+        mapMarkerManager.populateWithClientsMapMarkers(mapFragment);
 
     }
 
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CoordinatesReader.setResources(getResources());
+
 
         // Search for the map fragment to finish setup by calling init().
         mapFragment = (AndroidXMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapfragment);
@@ -62,14 +64,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Unable to set isolated disk cache path.", Toast.LENGTH_LONG);
         }
     }
-
-//    private void populateWithClientsMapMarkers() {
-//        //MAP MAKER MANAGER
-//        List<ClientMapMarker> clients = MapMarkerFabric.generateAllClients();
-//        for(ClientMapMarker clientMapMarker : clients) {
-//            //mapView.getMapScene().addMapMarker(clientMapMarker.getMapMarker());
-//        }
-//    }
 
     private void loadMapScene() {
         mapFragment.init(new OnEngineInitListener() {
@@ -91,5 +85,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void setMapMarkerImages() {
+//        Image clientImage = new Image();
+//        clientImage.setBitmap(getApplicationContext().getResources(), R.mipmap.pin);
+//        MapMarkerFabric.setClientImageResource(clientImage);
+    }
+
+    private void disableUnwantedGestures() {
+        mapFragment.getMapGesture().setDoubleTapEnabled(false);
+        mapFragment.getMapGesture().setTwoFingerTapEnabled(false);
+    }
+
+
+
 
 }

@@ -147,11 +147,11 @@ public class CoordinatesReader {
     }
 
     private static InputStream getFakeLoadUnloadDataFile() {
-        return null;
+        return appResources.openRawResource(R.raw.loadunload_fake);
     }
 
     private static InputStream getLoadUnloadDataFile() {
-        return null;
+        return appResources.openRawResource(R.raw.loadunload_real);
     }
 
     private static boolean hasNotProcessedEnoughClients(int parsedLines) {
