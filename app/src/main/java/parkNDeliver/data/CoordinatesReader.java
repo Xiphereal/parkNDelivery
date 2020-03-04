@@ -64,7 +64,6 @@ public class CoordinatesReader {
                     addClientToList(client);
                     parsedLines++;
 
-                    // DEBUG // System.out.println("Client [id= " + client[0] + " , x=" + client[1] + " , y=" + client[2] + "]");
                 }
             }
 
@@ -103,14 +102,12 @@ public class CoordinatesReader {
             int parsedLines = 0;
             while ((line = br.readLine()) != null && hasNotProcessedEnoughLoadUnloads(parsedLines)) {
 
-                if(startsWithNumber(line)) {
 
-                    String[] loadUnload = line.split(cvsSplitBy);
+                String[] loadUnload = line.split(cvsSplitBy);
 
-                    addLoadUnloadToList(loadUnload);
-                    parsedLines++;
+                addLoadUnloadToList(loadUnload);
+                parsedLines++;
 
-                }
             }
 
             return loadUnloads;

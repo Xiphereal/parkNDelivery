@@ -17,7 +17,7 @@ public class MapMarkerFabric {
 
     public static List<ClientMapMarker> generateAllClients() {
         List<ClientMapMarker> clientMapMarkers = new LinkedList<>();
-        List<Client> requestedClients = CoordinatesReader.getClients(20);
+        List<Client> requestedClients = CoordinatesReader.getClients(15);
 
         for (Client client : requestedClients) {
             clientMapMarkers.add(generateClient(client));
@@ -26,9 +26,9 @@ public class MapMarkerFabric {
         return clientMapMarkers;
     }
 
-    public List<LoadUnloadMapMarker> generateAllLoadUnloads() {
+    public static List<LoadUnloadMapMarker> generateAllLoadUnloads() {
         List<LoadUnloadMapMarker> loadUnloadMapMarkers = new LinkedList<>();
-        List<LoadUnload> requestedLoadUnloads = CoordinatesReader.getLoadUnloads(10);
+        List<LoadUnload> requestedLoadUnloads = CoordinatesReader.getLoadUnloads(6);
 
         for (LoadUnload loadUnload : requestedLoadUnloads) {
             loadUnloadMapMarkers.add(generateLoadUnload(loadUnload));
@@ -56,7 +56,7 @@ public class MapMarkerFabric {
         return clientMapMarker;
     }
 
-    private LoadUnloadMapMarker generateLoadUnload(LoadUnload loadUnload) {
+    private static LoadUnloadMapMarker generateLoadUnload(LoadUnload loadUnload) {
         GeoCoordinate coordinates = getGeoCoordinate(loadUnload);
         LoadUnloadMapMarker loadUnloadMapMarker = new LoadUnloadMapMarker(coordinates, context, loadUnloadImage);
         loadUnloadMapMarker.setImage();
@@ -67,7 +67,7 @@ public class MapMarkerFabric {
        return new GeoCoordinate(client.getLatitude(), client.getLongitude());
     }
 
-    private GeoCoordinate getGeoCoordinate(LoadUnload loadUnload) {
+    private static GeoCoordinate getGeoCoordinate(LoadUnload loadUnload) {
         return new GeoCoordinate(loadUnload.getLatitude(), loadUnload.getLongitude());
     }
 }

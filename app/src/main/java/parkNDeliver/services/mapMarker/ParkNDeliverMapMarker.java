@@ -1,6 +1,7 @@
 package parkNDeliver.services.mapMarker;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.PointF;
 import com.here.android.mpa.common.GeoCoordinate;
 import com.here.android.mpa.common.Image;
@@ -19,8 +20,7 @@ public abstract class ParkNDeliverMapMarker {
 
     protected void setImage() {
         mapMarker.setIcon(image);
-        mapMarker.setSvgIconScaling(0.05f);
-        mapMarker.setAnchorPoint(new PointF(0.5f, 1));
+        mapMarker.setAnchorPoint(new PointF(image.getWidth()/2, image.getHeight()));
     }
 
     protected MapMarker getMapMarker() {

@@ -17,6 +17,7 @@ import parkNDeliver.data.CoordinatesReader;
 import parkNDeliver.services.mapMarker.MapMarkerManager;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -37,10 +38,7 @@ public class MainActivity extends AppCompatActivity {
         MapMarkerFabric.setApplicationContext(this.getApplicationContext());
 
         //* Get custom images for both clients & loadUnloadPoints and pass them to the MapMarkerFabric. *//
-        //setMapMarkerImages();
-
-        //mapMarkerManager = new MapMarkerManager();
-        //mapMarkerManager.populateWithClientsMapMarkers(mapFragment);
+        setMapMarkerImages();
 
     }
 
@@ -79,18 +77,38 @@ public class MainActivity extends AppCompatActivity {
                             Map.Animation.NONE);
 
                     // Set the zoom level to the average between min and max
-                    map.setZoomLevel((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2);
+                    //map.setZoomLevel((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2);
+                    map.setZoomLevel(14);
+
+                    populateMap();
                 } else {
-                    System.out.println("ERROR: Cannot initialize Map Fragment");
+                    System.err.println("ERROR: Cannot initialize Map Fragment");
                 }
             }
         });
     }
 
+    private void populateMap() {
+        mapMarkerManager = new MapMarkerManager();
+        mapMarkerManager.populateWithClientsMapMarkers(mapFragment);
+        mapMarkerManager.populateWithLoadUnloadsMapMarkers(mapFragment);
+    }
+
     private void setMapMarkerImages() {
-     //   Image clientImage = new Image();
-     //   clientImage.setBitmap(R.mipmap.pin);
-     //   MapMarkerFabric.setClientImageResource(clientImage);
+        Image clientImage = new Image();
+        Image loadUnloadImage = new Image();
+
+        try {
+            clientImage.setImageResource(R.mipmap.mockup_client_pin);
+            loadUnloadImage.setImageResource(R.mipmap.mockup_load_unload_pin);
+        } catch (IOException e) {
+            System.err.println("Failed to load requested images.");
+            e.printStackTrace();
+        }
+
+        MapMarkerFabric.setClientImageResource(clientImage);
+        MapMarkerFabric.setLoadUnloadImageResource(loadUnloadImage);
+
     }
 
     private void disableUnwantedGestures() {
