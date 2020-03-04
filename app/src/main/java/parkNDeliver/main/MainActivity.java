@@ -1,5 +1,6 @@
 package parkNDeliver.main;
 
+import android.graphics.Bitmap;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Search for the map fragment to finish setup by calling init().
-        mapFragment = (AndroidXMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapfragment);
+        mapFragment = (AndroidXMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapfragmentExample);
 
         // Set up disk cache path for the map service for this application
         // It is recommended to use a path under your application folder for storing the disk cache
@@ -87,17 +88,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setMapMarkerImages() {
-//        Image clientImage = new Image();
-//        clientImage.setBitmap(getApplicationContext().getResources(), R.mipmap.pin);
-//        MapMarkerFabric.setClientImageResource(clientImage);
+     //   Image clientImage = new Image();
+     //   clientImage.setBitmap(R.mipmap.pin);
+     //   MapMarkerFabric.setClientImageResource(clientImage);
     }
 
     private void disableUnwantedGestures() {
         mapFragment.getMapGesture().setDoubleTapEnabled(false);
         mapFragment.getMapGesture().setTwoFingerTapEnabled(false);
     }
-
-
-
 
 }

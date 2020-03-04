@@ -17,7 +17,7 @@
     <!-- Map Fragment embedded with the map object -->
     <fragment
             class="com.here.android.mpa.mapping.AndroidXMapFragment"
-            android:id="@+id/mapfragment"
+            android:id="@+id/mapfragmentExample"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application tools:ignore="ExtraText,GoogleAppIndexingWarning"
                  android:icon="@mipmap/ic_launcher"
@@ -26,11 +27,11 @@
             </activity>
 
             <meta-data android:name="com.here.android.maps.appid"
-                       android:value="HesW0J3oFPHDQQNT37Ib" />
+                       android:value="rDaqBSqbn6EqrgT1YuFi" />
             <meta-data android:name="com.here.android.maps.apptoken"
-                       android:value="Ux6cXdJRPcrNXGEBNFr1AQ" />
+                       android:value="FYu5VZHOX83IBfT8SyeOgQ" />
             <meta-data android:name="com.here.android.maps.license.key"
-                       android:value="J+qyureL3R21ZuixjmSh69DYMjcpXkJKBb5AgmVrNkU8HMOPWN6wE3cKVmQn037NZXMpwtF9qzAhMZiPIIyJ55W3hgf4HhMAwHwzNjNchfcotQ67c2qQ62e77KV9mCJsKiVAwj3bdzQ7KwFH5WEd6lN6DUVCiWTs6BDpZGwbbahaCAci/psETeCUJJ+pZ+9N/LQ/3OWkKA+iW/ZGIhy1zdmNOx0SQswhJXsqylwtiPLrjqwEQiVqm047ftje8AWLFBlGJ20wr6pdbdmRTCkFf7le1rNJmZJQkeIn4/WUCw+SVlk0a8ihPJ6G0xpsYF3G8kmqylSE/bN0yZWWAeRTHq23ZhTKGsGF9r7ghvorMwa31ZEn+h3XgpSCRja1iIP9kUeduF2lCvGu11vpdx2wtsaqB5UTmM2aken5wlPwjNCe4p0bCVZGTcL0p4DD8rW3uKkx8gQVCb4R9ToUNZ+rVbk8ntAdyosIKNxxptvlktBCFJ+mM1yqAOHRVWE/fGNGKxtd5IcfMsFTr49BMnXnZI+cGIeLs23WzfQLjBZ+Uv856csUr0VwE2vgXGY30KZRuw9Vtil/BxqwDOCDpSwN9Ke70bMFdEQ/ZeHi76HRFsaK19HU+kL0IQZC6/o233IIqBZIUPxbthsxMau2YZfaxRms1J3uWTGeoCGAlCZzkx4="/>
+                       android:value="MoGDsJvVtyxSEHTeJzvdm3AARvYWe8qj50sAZm7FJhP7BD59S9r5Prq31xs86K0C7h8qT870CX7qLEbO6MUogwVWyFIdL4AYO3/8RF7U96akpyvxxlZ9i2xFP6GR/YJq19Ld5/QDstO6eaAUyz6XikyE7ykB0lv8P0etGVFMF3WzIEoNBRls0mbBpx0dhB7kftH2WivOiH8Cgdmb0H7uK2HucWePnLPcgSb3JtdJ0rjQs7Upq5z1LBO8AhMzJsVMcwcB9OfK3lV7lvQUU9CVJ58/eO2QfB9LwxOGpePkTPMrKdEW+tfWVqwvlARInhQ+luospKtGuHgUSP+DAjuJLMEPwwJv0K0xgNrYI0hxBTcLl/DzSVgr4sZufd5dbxzgD36RxcJ64Sg/QHMLeEh9wzAeZIRYNwDFNx0Fjs0V0y0QYRdmMDpGMhQ2tz8rN4VhKWW8gBcuW2XqiJh1XC3AEP4+iVjxGqQXk4JZpZD8+vLo+uDx17Ypmx7ReK+YbhtSeIs/1xYOiX+2Hl9uAdsTbDhyltO0U1VeBR3FVLNL+3vu6HL8/pQx4rikLsjlKjrSjqp1hJZ2WwqWPVgqIPtSoas6gZpKMxUp/eqwvRWtss4Bha7YrsakWewIKtzL6IIoaOxH/LDp1TMvOCchvLDnlPHNGYhd+RRdMYc4FRmqPU0="/>
         <service
                     android:name="com.here.android.mpa.service.MapService"
                     android:label="myLabelName"
