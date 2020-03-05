@@ -9,12 +9,10 @@ import com.here.android.mpa.mapping.MapMarker;
 
 public abstract class ParkNDeliverMapMarker {
     protected MapMarker mapMarker;
-    protected Context context;
     protected Image image;
 
-    protected void initialize(GeoCoordinate geoCoordinate, Context context, Image image) {
+    protected void initialize(GeoCoordinate geoCoordinate, Image image) {
         mapMarker = new MapMarker(geoCoordinate);
-        this.context = context;
         this.image = image;
     }
 

@@ -11,7 +11,6 @@ import java.util.List;
 
 public class MapMarkerFabric {
 
-    private static Context context;
     private static Image clientImage;
     private static Image loadUnloadImage;
 
@@ -28,17 +27,13 @@ public class MapMarkerFabric {
 
     public static List<LoadUnloadMapMarker> generateAllLoadUnloads() {
         List<LoadUnloadMapMarker> loadUnloadMapMarkers = new LinkedList<>();
-        List<LoadUnload> requestedLoadUnloads = CoordinatesReader.getLoadUnloads(1);
+        List<LoadUnload> requestedLoadUnloads = CoordinatesReader.getLoadUnloads(10);
 
         for (LoadUnload loadUnload : requestedLoadUnloads) {
             loadUnloadMapMarkers.add(generateLoadUnload(loadUnload));
         }
 
         return loadUnloadMapMarkers;
-    }
-
-    public static void setApplicationContext(Context applicationContext) {
-        context = applicationContext;
     }
 
     public static void setClientImageResource(Image image) {
@@ -51,14 +46,14 @@ public class MapMarkerFabric {
 
     private static ClientMapMarker generateClient(Client client) {
         GeoCoordinate coordinate = getGeoCoordinate(client);
-        ClientMapMarker clientMapMarker = new ClientMapMarker(coordinate, context, clientImage);
+        ClientMapMarker clientMapMarker = new ClientMapMarker(coordinate, clientImage);
         clientMapMarker.setImage();
         return clientMapMarker;
     }
 
     private static LoadUnloadMapMarker generateLoadUnload(LoadUnload loadUnload) {
         GeoCoordinate coordinates = getGeoCoordinate(loadUnload);
-        LoadUnloadMapMarker loadUnloadMapMarker = new LoadUnloadMapMarker(coordinates, context, loadUnloadImage);
+        LoadUnloadMapMarker loadUnloadMapMarker = new LoadUnloadMapMarker(coordinates, loadUnloadImage);
         loadUnloadMapMarker.setImage();
         return loadUnloadMapMarker;
     }

@@ -1,5 +1,6 @@
 package parkNDeliver.services.isochrone;
 
+import android.graphics.Color;
 import com.here.android.mpa.common.GeoCoordinate;
 import com.here.android.mpa.common.GeoPolygon;
 import com.here.android.mpa.isoline.*;
@@ -18,6 +19,7 @@ public class Isochrone {
     IsolineRouter isolineRouter;
     IsolinePlan isolinePlan;
     AndroidXMapFragment mapFragment;
+    int color = Color.argb(30,0,0,255);
 
     public Isochrone(float minutes, GeoCoordinate origin) {
         isolineRouter = new IsolineRouter();
@@ -27,14 +29,14 @@ public class Isochrone {
         isolinePlan.setStart(new RouteWaypoint(origin));
         setTime((int) minutes);
 
-        isolinePlan.setRangeType(IsolinePlan.RangeType.TIME);
-
         configureIsochrone();
 
         calculateIsochrone();
     }
 
     private void configureIsochrone() {
+        isolinePlan.setRangeType(IsolinePlan.RangeType.TIME);
+
         RouteOptions routeOptions = new RouteOptions();
         routeOptions.setTransportMode(RouteOptions.TransportMode.PEDESTRIAN);
         routeOptions.setRouteType(RouteOptions.Type.FASTEST);
@@ -42,12 +44,14 @@ public class Isochrone {
         isolinePlan.setRouteOptions(routeOptions);
     }
 
-    public void calculateIsochrone() {
+    private void calculateIsochrone() {
         isolineRouter.calculateIsoline(isolinePlan, new IsolineRouter.Listener() {
             @Override public void onCalculateIsolineFinished(List<Isoline> response,
                                                              IsolineError error) {
                 if (error == IsolineError.NONE) {
-                    drawIsochrone(response);
+                    drawIsochrone(response.get(0)); //Only one isoline per request.
+                } else {
+                    System.err.println("Error getting isoline calculation from API: " + error);
                 }
             }
         });
@@ -60,7 +64,17 @@ public class Isochrone {
         isolinePlan.setRanges(ranges);
     }
 
-    private void drawIsochrone(List<Isoline> response) {
+    private void drawIsochrone(Isoline isoline) {
+        List<GeoPolygon> geoPolygons = isoline.getComponents();
+
+        for(GeoPolygon geoPolygon : geoPolygons) {
+            MapPolygon mapPolygon = new MapPolygon(geoPolygon);
+            mapPolygon.setFillColor(color);
+            mapFragment.getMap().addMapObject(mapPolygon);
+        }
+    }
+
+    private void drawMultipleIsochrones(List<Isoline> response) {
         //Find geoCoordinates of each isoline
         List<List<GeoPolygon>> geoPolygonsSet = new LinkedList<>();
         for (Isoline isoline : response) {
@@ -70,10 +84,14 @@ public class Isochrone {
         for(List<GeoPolygon> geoPolygons : geoPolygonsSet) {
             for(GeoPolygon geoPolygon : geoPolygons) {
                 MapPolygon mapPolygon = new MapPolygon(geoPolygon);
-                mapPolygon.setFillColor(255);
+                mapPolygon.setFillColor(color);
                 mapFragment.getMap().addMapObject(mapPolygon);
             }
         }
+    }
+
+    public void setIsochroneColor(int androidColor) {
+        color = androidColor;
     }
 
     public void setMapFragment(AndroidXMapFragment mapFragment) {
