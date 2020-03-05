@@ -30,6 +30,10 @@ public class IsochroneManager {
         customMapMarker.setActiveIsochrones(null);
     }
 
+    public void toggleInfoBubble(ParkNDeliverMapMarker customMapMarker, boolean value) {
+
+    }
+
     @NotNull
     private List<Isochrone> addIsochrones(AndroidXMapFragment mapFragment, MapMarker mapMarker) {
         List<Isochrone> addedIsochrones = new LinkedList<>();

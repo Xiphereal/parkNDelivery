@@ -1,6 +1,5 @@
 package parkNDeliver.main;
 
-import android.graphics.Bitmap;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.common.ViewObject;
 import com.here.android.mpa.mapping.*;
 import parkNDeliver.services.isochrone.IsochroneManager;
-import parkNDeliver.services.mapMarker.ClientMapMarker;
 import parkNDeliver.services.mapMarker.MapMarkerFabric;
 
 import parkNDeliver.data.CoordinatesReader;
@@ -133,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     //((MapObject) selectedObject).setVisible(false);
                     MapMarker mapMarker = (MapMarker) selectedObject;
 
-                    toggleIsochrones(mapMarker);
+                    selectMapMarker(mapMarker);
                 }
 
             // return false to allow the map to handle this callback also
@@ -144,17 +142,18 @@ public class MainActivity extends AppCompatActivity {
         mapFragment.getMapGesture().addOnGestureListener(listener, 0, false);
     }
 
-    private void toggleIsochrones(MapMarker mapMarker) {
+    private void selectMapMarker(MapMarker mapMarker) {
 
         ParkNDeliverMapMarker pndMapMarker = mapMarkerManager.getWrapper(mapMarker);
 
         if (pndMapMarker == null)
-            throw new NullPointerException("The MapMarker wrapper has not been found.");
+            System.err.println("The MapMarker wrapper has not been found.");
 
-        if (pndMapMarker.hasActiveIsochrones())
+        if (pndMapMarker.hasActiveIsochrones()) {
             isochroneManager.removeIsochronesFor(pndMapMarker, map);
-        else
+        } else {
             isochroneManager.setIsochronesFor(pndMapMarker, mapFragment);
+        }
 
     }
 
