@@ -18,10 +18,12 @@ public abstract class ParkNDeliverMapMarker {
 
     protected void setImage() {
         mapMarker.setIcon(image);
+        mapMarker.setZIndex(10);
         mapMarker.setAnchorPoint(new PointF(image.getWidth()/2, image.getHeight()));
     }
 
     protected MapMarker getMapMarker() {
         return mapMarker;
     }
+
 }

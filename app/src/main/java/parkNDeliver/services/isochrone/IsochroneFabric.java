@@ -10,8 +10,8 @@ public class IsochroneFabric {
     private static float maximunTimeInMinutes = 15;
     private static float lapseInMinutes = 5;
 
-    private static int innerMostColor = Color.argb(60,30, 255, 30);
-    private static int middleColor = Color.argb(60,30, 30, 255);
+    private static int innerMostColor = Color.argb(150,30, 255, 30);
+    private static int middleColor = Color.argb(130,255, 255, 30);
     private static int outterMostColor = Color.argb(60,255, 30, 30);
 
     public static Isochrone generateOutterMostIsochrone(MapMarker mapMarker, AndroidXMapFragment mapFragment) {
@@ -19,7 +19,7 @@ public class IsochroneFabric {
     }
 
     public static Isochrone generateInnerMostIsochrone(MapMarker mapMarker, AndroidXMapFragment mapFragment) {
-        int timeInMinutes = (int) (maximunTimeInMinutes - lapseInMinutes * numberOfIsochronesPerMarker);
+        int timeInMinutes = (int) (maximunTimeInMinutes - lapseInMinutes * (numberOfIsochronesPerMarker - 1));
         return generateIsochrone(timeInMinutes, mapMarker.getCoordinate(), innerMostColor, mapFragment);
     }
 

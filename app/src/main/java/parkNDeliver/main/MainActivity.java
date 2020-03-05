@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                     //map.setZoomLevel((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2);
                     map.setZoomLevel(14);
 
+                    manageGestures();
+
                     populateMap();
                 } else {
                     System.err.println("ERROR: Cannot initialize Map Fragment");
@@ -111,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
     private void disableUnwantedGestures() {
         mapFragment.getMapGesture().setDoubleTapEnabled(false);
         mapFragment.getMapGesture().setTwoFingerTapEnabled(false);
+    }
+
+
+    private void manageGestures() {
+
     }
 
 }

@@ -144,7 +144,7 @@ public class CoordinatesReader {
     }
 
     private static InputStream getFakeLoadUnloadDataFile() {
-        return appResources.openRawResource(R.raw.loadunload_fake);
+        return appResources.openRawResource(R.raw.loadunload_real);
     }
 
     private static InputStream getLoadUnloadDataFile() {
