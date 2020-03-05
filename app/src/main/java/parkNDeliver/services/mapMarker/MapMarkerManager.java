@@ -2,15 +2,14 @@ package parkNDeliver.services.mapMarker;
 
 import com.here.android.mpa.mapping.AndroidXMapFragment;
 import com.here.android.mpa.mapping.MapMarker;
-import com.here.android.mpa.mapping.MapPolygon;
-import parkNDeliver.services.isochrone.Isochrone;
 import parkNDeliver.services.isochrone.IsochroneManager;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class MapMarkerManager {
     IsochroneManager isochroneManager;
+    List<ParkNDeliverMapMarker> activeParkNDeliverMapMarkers = new LinkedList<>();
 
     public MapMarkerManager() {
         isochroneManager = new IsochroneManager();
@@ -22,6 +21,8 @@ public class MapMarkerManager {
 
         for(ClientMapMarker clientMapMarker : clients) {
             drawMapObject(mapFragment, clientMapMarker.getMapMarker());
+
+            activeParkNDeliverMapMarkers.add(clientMapMarker);
         }
 
     }
@@ -35,13 +36,27 @@ public class MapMarkerManager {
 
             drawMapObject(mapFragment, mapMarker);
 
-            isochroneManager.setIsochronesFor(mapMarker, mapFragment);
+            //isochroneManager.setIsochronesFor(loadUnloadMapMarker, mapFragment);
 
+            activeParkNDeliverMapMarkers.add(loadUnloadMapMarker);
         }
 
+    }
+
+    public ParkNDeliverMapMarker getWrapper(MapMarker mapMarker) {
+
+        for (ParkNDeliverMapMarker pndMapMarker: activeParkNDeliverMapMarkers) {
+            if (pndMapMarker.getMapMarker().equals(mapMarker)) {
+                return pndMapMarker;
+            }
+        }
+
+        return null;
     }
 
     private void drawMapObject(AndroidXMapFragment mapFragment, MapMarker mapMarker) {
         mapFragment.getMap().addMapObject(mapMarker);
     }
+
+
 }

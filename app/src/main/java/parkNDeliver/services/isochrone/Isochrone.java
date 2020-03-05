@@ -16,10 +16,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Isochrone {
-    IsolineRouter isolineRouter;
-    IsolinePlan isolinePlan;
-    AndroidXMapFragment mapFragment;
-    int color = Color.argb(30,0,0,255);
+    private IsolineRouter isolineRouter;
+    private IsolinePlan isolinePlan;
+    private MapPolygon mapPolygon;
+    private AndroidXMapFragment mapFragment;
+    private int color = Color.argb(30,0,0,255);
 
     public Isochrone(float minutes, GeoCoordinate origin) {
         isolineRouter = new IsolineRouter();
@@ -32,6 +33,25 @@ public class Isochrone {
         configureIsochrone();
 
         calculateIsochrone();
+    }
+
+    public void setTime(int minutes) {
+        ArrayList<Integer> ranges = new ArrayList<>();
+        ranges.add(minutes * 60); // range in seconds
+
+        isolinePlan.setRanges(ranges);
+    }
+
+    public void setIsochroneColor(int androidColor) {
+        color = androidColor;
+    }
+
+    public void setMapFragment(AndroidXMapFragment mapFragment) {
+        this.mapFragment = mapFragment;
+    }
+
+    public MapPolygon getMapPolygon() {
+        return mapPolygon;
     }
 
     private void configureIsochrone() {
@@ -57,18 +77,11 @@ public class Isochrone {
         });
     }
 
-    public void setTime(int minutes) {
-        ArrayList<Integer> ranges = new ArrayList<>();
-        ranges.add(minutes * 60); // range in seconds
-
-        isolinePlan.setRanges(ranges);
-    }
-
     private void drawIsochrone(Isoline isoline) {
         List<GeoPolygon> geoPolygons = isoline.getComponents();
 
         for(GeoPolygon geoPolygon : geoPolygons) {
-            MapPolygon mapPolygon = new MapPolygon(geoPolygon);
+            mapPolygon = new MapPolygon(geoPolygon);
             mapPolygon.setFillColor(color);
             mapFragment.getMap().addMapObject(mapPolygon);
         }
@@ -90,13 +103,7 @@ public class Isochrone {
         }
     }
 
-    public void setIsochroneColor(int androidColor) {
-        color = androidColor;
-    }
 
-    public void setMapFragment(AndroidXMapFragment mapFragment) {
-        this.mapFragment = mapFragment;
-    }
 
 
 }

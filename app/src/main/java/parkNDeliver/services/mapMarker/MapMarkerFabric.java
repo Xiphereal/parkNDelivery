@@ -16,7 +16,7 @@ public class MapMarkerFabric {
 
     public static List<ClientMapMarker> generateAllClients() {
         List<ClientMapMarker> clientMapMarkers = new LinkedList<>();
-        List<Client> requestedClients = CoordinatesReader.getClients(30);
+        List<Client> requestedClients = CoordinatesReader.getClients(100);
 
         for (Client client : requestedClients) {
             clientMapMarkers.add(generateClient(client));
@@ -27,7 +27,7 @@ public class MapMarkerFabric {
 
     public static List<LoadUnloadMapMarker> generateAllLoadUnloads() {
         List<LoadUnloadMapMarker> loadUnloadMapMarkers = new LinkedList<>();
-        List<LoadUnload> requestedLoadUnloads = CoordinatesReader.getLoadUnloads(10);
+        List<LoadUnload> requestedLoadUnloads = CoordinatesReader.getLoadUnloads(20);
 
         for (LoadUnload loadUnload : requestedLoadUnloads) {
             loadUnloadMapMarkers.add(generateLoadUnload(loadUnload));

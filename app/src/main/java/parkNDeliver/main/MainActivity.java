@@ -8,13 +8,15 @@ import com.example.parkndeliver.R;
 import com.here.android.mpa.common.GeoCoordinate;
 import com.here.android.mpa.common.Image;
 import com.here.android.mpa.common.OnEngineInitListener;
-import com.here.android.mpa.mapping.AndroidXMapFragment;
-import com.here.android.mpa.mapping.Map;
+import com.here.android.mpa.common.ViewObject;
+import com.here.android.mpa.mapping.*;
+import parkNDeliver.services.isochrone.IsochroneManager;
 import parkNDeliver.services.mapMarker.ClientMapMarker;
 import parkNDeliver.services.mapMarker.MapMarkerFabric;
 
 import parkNDeliver.data.CoordinatesReader;
 import parkNDeliver.services.mapMarker.MapMarkerManager;
+import parkNDeliver.services.mapMarker.ParkNDeliverMapMarker;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Map map;
     private AndroidXMapFragment mapFragment;
     private MapMarkerManager mapMarkerManager;
+    private IsochroneManager isochroneManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         initialize();
 
-        //disableUnwantedGestures();
 
         //* Get custom images for both clients & loadUnloadPoints and pass them to the MapMarkerFabric. *//
         setMapMarkerImages();
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         CoordinatesReader.setResources(getResources());
 
+        isochroneManager = new IsochroneManager();
+        mapMarkerManager = new MapMarkerManager();
 
         // Search for the map fragment to finish setup by calling init().
         mapFragment = (AndroidXMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapfragmentExample);
@@ -88,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateMap() {
-        mapMarkerManager = new MapMarkerManager();
         mapMarkerManager.populateWithClientsMapMarkers(mapFragment);
         mapMarkerManager.populateWithLoadUnloadsMapMarkers(mapFragment);
     }
@@ -117,7 +120,47 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void manageGestures() {
+        //disableUnwantedGestures();
 
+        MapGesture.OnGestureListener listener = new MapGesture.OnGestureListener.OnGestureListenerAdapter() {
+            @Override
+            public boolean onMapObjectsSelected(List<ViewObject> objects) {
+
+                //Only want to affect one object.
+                ViewObject selectedObject = objects.get(0);
+
+                if (isMapMarker(selectedObject)) {
+                    //((MapObject) selectedObject).setVisible(false);
+                    MapMarker mapMarker = (MapMarker) selectedObject;
+
+                    toggleIsochrones(mapMarker);
+                }
+
+            // return false to allow the map to handle this callback also
+            return false;
+            }
+        };
+
+        mapFragment.getMapGesture().addOnGestureListener(listener, 0, false);
+    }
+
+    private void toggleIsochrones(MapMarker mapMarker) {
+
+        ParkNDeliverMapMarker pndMapMarker = mapMarkerManager.getWrapper(mapMarker);
+
+        if (pndMapMarker == null)
+            throw new NullPointerException("The MapMarker wrapper has not been found.");
+
+        if (pndMapMarker.hasActiveIsochrones())
+            isochroneManager.removeIsochronesFor(pndMapMarker, map);
+        else
+            isochroneManager.setIsochronesFor(pndMapMarker, mapFragment);
+
+    }
+
+    private boolean isMapMarker(ViewObject selectedObject) {
+        return selectedObject.getBaseType() == ViewObject.Type.USER_OBJECT
+                && ((MapObject) selectedObject).getType() == MapObject.Type.MARKER;
     }
 
 }
